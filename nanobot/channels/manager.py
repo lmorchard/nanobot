@@ -126,6 +126,17 @@ class ChannelManager:
             except ImportError as e:
                 logger.warning("Slack channel not available: {}", e)
 
+        # Mattermost channel
+        if self.config.channels.mattermost.enabled:
+            try:
+                from nanobot.channels.mattermost import MattermostChannel
+                self.channels["mattermost"] = MattermostChannel(
+                    self.config.channels.mattermost, self.bus
+                )
+                logger.info("Mattermost channel enabled")
+            except ImportError as e:
+                logger.warning(f"Mattermost channel not available: {e}")
+
         # QQ channel
         if self.config.channels.qq.enabled:
             try:

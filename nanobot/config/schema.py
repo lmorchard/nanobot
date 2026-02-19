@@ -201,6 +201,17 @@ class QQConfig(Base):
 
 
 
+class MattermostConfig(Base):
+    """Mattermost channel configuration."""
+
+    enabled: bool = False
+    url: str = ""  # Server URL, e.g. "https://mattermost.example.com"
+    token: str = ""  # Personal Access Token or Bot Token
+    username: str = ""  # Bot username for mention stripping (optional)
+    reply_in_thread: bool = True  # Reply as thread in channels (DMs always flat)
+    allow_from: list[str] = Field(default_factory=list)  # Allowed user IDs (empty = allow all)
+
+
 class ChannelsConfig(Base):
     """Configuration for chat channels."""
 
@@ -216,6 +227,7 @@ class ChannelsConfig(Base):
     slack: SlackConfig = Field(default_factory=SlackConfig)
     qq: QQConfig = Field(default_factory=QQConfig)
     matrix: MatrixConfig = Field(default_factory=MatrixConfig)
+    mattermost: MattermostConfig = Field(default_factory=MattermostConfig)
 
 
 class AgentDefaults(Base):
